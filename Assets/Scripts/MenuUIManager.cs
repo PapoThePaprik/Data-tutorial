@@ -22,12 +22,7 @@ public class MenuUIManager : MonoBehaviour
 		bestScoreTxt.text = $"Best Score: {MenuManager.Instance.highScorePlayerName} : {MenuManager.Instance.highScore}";
 	}
 
-	public void ResetBestScore()
-	{
-		MenuManager.Instance.highScorePlayerName = "";
-		MenuManager.Instance.highScore = 0;
-		
-	}
+	
 	public void LeaderboardsScene()
 	{
 		SceneManager.LoadScene(1);
@@ -35,7 +30,7 @@ public class MenuUIManager : MonoBehaviour
 	public void StartGameScene()
 	{
 		
-		SceneManager.LoadScene(2);
+		SceneManager.LoadScene(1);
 	}
 
 	public void AnimStop()
