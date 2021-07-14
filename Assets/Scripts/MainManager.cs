@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
+    public Text bestScoreTxt;
     public Text ScoreText;
     public GameObject GameOverText;
     
@@ -22,6 +24,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -35,6 +38,11 @@ public class MainManager : MonoBehaviour
                 brick.PointValue = pointCountArray[i];
                 brick.onDestroyed.AddListener(AddPoint);
             }
+        }
+
+        if (MenuManager.Instance.highScorePlayerName !=  "")
+        {
+            DisplayHighScore();
         }
     }
 
@@ -66,11 +74,26 @@ public class MainManager : MonoBehaviour
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
+        bestScoreTxt.text = "Best Score : " +  MenuManager.Instance.currentPlayerName +  " : "  + m_Points;
+        if(MenuManager.Instance.highScore < m_Points)
+		{
+            MenuManager.Instance.highScorePlayerName = MenuManager.Instance.currentPlayerName;
+            MenuManager.Instance.highScore = m_Points;
+            DisplayHighScore();
+            MenuManager.Instance.SaveHighScore();
+		}
     }
 
+  
+
+    public void DisplayHighScore()
+	{
+        bestScoreTxt.text = $"Best Score: {MenuManager.Instance.highScorePlayerName} : {MenuManager.Instance.highScore}";
+    }
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+       
     }
 }
